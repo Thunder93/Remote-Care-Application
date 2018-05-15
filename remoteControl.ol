@@ -17,7 +17,7 @@ main
 		};
 		println@Console(arguments)()
 	};
-	// sendCommand@AccessControl({ .smarthome="Test" , .deviceItem=args[1] , .value=args[2] })();
+	// sendCommand@AccessControl({ .smartHome="TestHome" , .deviceItem="TestDevice" , .value="TestValue" })();
 	sendCommand@AccessControl({.smartHome=args[0],.deviceItem=args[1], .value=args[2]})(response);
 	println@Console(response)()
 }

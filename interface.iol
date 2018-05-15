@@ -6,6 +6,11 @@ type Command:void {
 }
 
 interface AccessInterface {
-RequestResponse:
-	sendCommand(Command)(bool)
+	RequestResponse:
+		sendCommand(Command)(bool)
+}
+
+interface HistoryInterface {
+	OneWay: 
+		logCommand( Command )
 }
