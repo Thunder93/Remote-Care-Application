@@ -1,6 +1,6 @@
 include "console.iol"
 include "interface.iol"
-include "string_utils.iol"
+include "database.iol"
 
 inputPort HistoryLogging {
 	Location: "socket://localhost:8124/"
@@ -10,52 +10,36 @@ inputPort HistoryLogging {
 
 execution { concurrent }
 
-define initSmartHome {
-	
-	global.smartHomes[index] = "Home" + index;
-	with(global.smartHomes[index]) {
-		.deviceItems[0] = "TV";	
-		.deviceItems[0].itemStates[0].value = "On";	
-		.deviceItems[0].itemStates[0].timestamp = "0";
-		.deviceItems[1] = "Radio";	
-		.deviceItems[1].itemStates[0].value = "On";	
-		.deviceItems[1].itemStates[0].timestamp = "0"
-	}
-}
-
 init {
 	install( TypeMismatch =>
 				println@Console( "TypeMismatch: " + main.TypeMismatch )()
 	);
-	
-	index = 0;
-	initSmartHome;
-	index = 1;
-	initSmartHome
+	with ( connectionInfo ){
+	    .host = "localhost";
+	    .driver = "mysql";
+	    .port = 3306;
+	    .database = "world?useSSL=false"; //eigene Datenbank?
+	    .username = "root";
+	    .password = "root"
+	};
+	connect@Database(connectionInfo )(void);
+	checkConnection@Database( void )( void );
+	println@Console("Connected  to  database .")();
+	scope ( createTable ) {
+  	install ( SQLException => println@Console("History table already there")());
+	  updateRequest ="CREATE TABLE history(smartHome VARCHAR(50) NOT NULL,"+
+									 "deviceItem VARCHAR(50) NOT NULL, value VARCHAR(50) NOT NULL,"+
+									 "timestamp TIMESTAMP NOT NULL default CURRENT_TIMESTAMP," +
+	            		 "PRIMARY KEY(smartHome,deviceItem,value,timestamp));";
+	  update@Database( updateRequest )( ret );
+		println@Console("Created HistoryTable")()
+	  }
 }
 
-main {	
+main {
 	logCommand(command);
-	{
-		println@Console("Logging Command:" + command.smartHome+ " "+ command.deviceItem +" "+ command.value)()
-		|
-		foreach(shome : global.smartHomes) {
-			request = shome;
-			request.substring = command.smartHome;
-			Contains@StringUtils(request)(response);
-			//if(response)
-			//{
-			//	foreach(device : sHome.deviceItems) {
-			//		request = device;
-			//		request.substring = command.deviceItem;
-			//		contains@StringUtils(request)(response);
-			//		if(response)
-			//		{
-			//			last = device.itemStates[#device.Itemstates - 1];
-			//			device.itemStates[#device.Itemstates] = {.value = command.value, .timestamp = --last.timestamp}
-			//		}
-			//	}
-			}	
-		}
-	}
+		println@Console("Logging Command:" + command.smartHome+ " "+ command.deviceItem +" "+ command.value)();
+		updateRequest="INSERT INTO history(smartHome,deviceItem,value) VALUES('"+command.smartHome+
+									"', '"+command.deviceItem+"', '"+command.value+"')";
+		update@Database(updateRequest)(response) //TODO Error handeling if response!=1
 }
