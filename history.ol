@@ -11,7 +11,7 @@ execution { concurrent }
 
 define initSmartHome {
 	
-	with(smartHomes[index]) {
+	with(global.smartHomes[index]) {
 		.name = "Home1";
 		.deviceItems[0].name = "TV";	
 		.deviceItems[0].itemStates[0].value = "On";	
