@@ -7,6 +7,12 @@ Protocol: sodep
 Interfaces: AccessInterface
 }
 
+outputPort RemoteControl {
+	Location: "socket://localhost:8125/"
+	Protocol: sodep
+	Interfaces: SmartHomeClientInterface
+}
+
 main
 {
 	debug = true; //TODO make global somehow
@@ -19,5 +25,14 @@ main
 	};
 	// sendCommand@AccessControl({ .smartHome="TestHome" , .deviceItem="TestDevice" , .value="TestValue" })();
 	checkWriteAccess@AccessControl({.user=args[0],.smartHome=args[1],.deviceItem=args[2]} )(response);
-	println@Console(response)()
+	if(response){
+		sendCommand@RemoteControl({.smartHome=args[1],.deviceItem=args[2],.value=args[3]})(response);
+		if(response){
+			println@Console("Successful")()
+		}else{
+			println@Console("Failed")()
+		}
+	}else{
+		println@Console("User is not allowed to access or device does not exist")()
+	}
 }
