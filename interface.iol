@@ -13,7 +13,8 @@ type AccessRequest:void {
 
 interface AccessInterface {
 	RequestResponse:
-		checkWriteAccess(AccessRequest)(bool)
+		checkWriteAccess(AccessRequest)(bool),
+		checkReadAccess(AccessRequest)(bool)
 }
 
 interface HistoryInterface {
