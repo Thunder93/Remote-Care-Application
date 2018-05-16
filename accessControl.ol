@@ -7,7 +7,7 @@ inputPort AccessControl {
 	Interfaces: AccessInterface
 }
 
-execution { sequential }
+execution { concurrent }
 
 init {
 	install( TypeMismatch =>
@@ -16,8 +16,12 @@ init {
 }
 
 main {
-	checkWriteAccess(AccessRequest)(response){
+	[checkWriteAccess(AccessRequest)(response){
 		println@Console("AccessControl recieved Message: "+AccessRequest.user +" "+ AccessRequest.smartHome +" "+AccessRequest.deviceItem )();
 		response=true
-	}
+	}]
+	[checkReadAccess(AccessRequest)(response){
+		println@Console("AccessControl recieved Message: "+AccessRequest.user +" "+ AccessRequest.smartHome +" "+AccessRequest.deviceItem )();
+		response=true
+	}]
 }
