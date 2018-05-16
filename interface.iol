@@ -5,12 +5,23 @@ type Command:void {
 	//.commandType:string //Sinn?
 }
 
+type AccessRequest:void {
+	.user:string
+	.smartHome:string
+	.deviceItem:string
+}
+
 interface AccessInterface {
 	RequestResponse:
-		sendCommand(Command)(bool)
+		checkWriteAccess(AccessRequest)(bool)
 }
 
 interface HistoryInterface {
-	OneWay: 
+	OneWay:
 		logCommand( Command )
+}
+
+interface SmartHomeClientInterface {
+	RequestResponse:
+		sendCommand(Command)(bool)
 }

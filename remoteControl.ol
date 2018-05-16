@@ -18,6 +18,6 @@ main
 		println@Console(arguments)()
 	};
 	// sendCommand@AccessControl({ .smartHome="TestHome" , .deviceItem="TestDevice" , .value="TestValue" })();
-	sendCommand@AccessControl({.smartHome=args[0],.deviceItem=args[1], .value=args[2]})(response);
+	checkWriteAccess@AccessControl({.user=args[0],.smartHome=args[1],.deviceItem=args[2]} )(response);
 	println@Console(response)()
 }

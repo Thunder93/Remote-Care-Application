@@ -7,12 +7,6 @@ inputPort AccessControl {
 	Interfaces: AccessInterface
 }
 
-outputPort HistoryLogging {
-	Location: "socket://localhost:8124/"
-	Protocol: sodep
-	Interfaces: HistoryInterface
-}
-
 execution { sequential }
 
 init {
@@ -22,9 +16,8 @@ init {
 }
 
 main {
-	sendCommand(command)(response){
-		println@Console("AccessControl recieved Message: "+ command.smartHome+ " "+command.deviceItem +" "+ command.value)();
-		logCommand@HistoryLogging(command) |
+	checkWriteAccess(AccessRequest)(response){
+		println@Console("AccessControl recieved Message: "+AccessRequest.user +" "+ AccessRequest.smartHome +" "+AccessRequest.deviceItem )();
 		response=true
 	}
 }
