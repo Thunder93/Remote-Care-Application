@@ -13,7 +13,7 @@ outputPort HistoryLogging {
 	Interfaces: HistoryInterface
 }
 
-execution { sequential }
+execution { concurrent }
 
 init {
 	install( TypeMismatch =>

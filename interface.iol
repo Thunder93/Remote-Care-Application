@@ -11,6 +11,19 @@ type AccessRequest:void {
 	.deviceItem:string
 }
 
+type ItemState:void {
+	.value:string
+	.timestamp:string
+}
+
+type SmartHome:void {
+	.name:string
+	.deviceItems*:void {
+		.name:string
+		.itemStates*:ItemState	
+	}
+}
+
 interface AccessInterface {
 	RequestResponse:
 		checkWriteAccess(AccessRequest)(bool)
