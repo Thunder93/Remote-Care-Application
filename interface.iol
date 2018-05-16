@@ -16,10 +16,8 @@ type ItemState:void {
 	.timestamp:string
 }
 
-type SmartHome:void {
-	.name:string
-	.deviceItems*:void {
-		.name:string
+type SmartHome:string {
+	.deviceItems*:string {
 		.itemStates*:ItemState	
 	}
 }
