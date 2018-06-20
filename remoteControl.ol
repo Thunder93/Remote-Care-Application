@@ -15,15 +15,6 @@ outputPort RemoteControl {
 
 main
 {
-	debug = true; //TODO make global somehow
-	if(debug){	// gib alle übergebenen Argumente aus
-		arguments="";
-		for(i=0,i<#args,i++){
-			arguments=arguments+"Args["+i+"]: "+args[i]+" "
-		};
-		println@Console(arguments)()
-	};
-	// sendCommand@AccessControl({ .smartHome="TestHome" , .deviceItem="TestDevice" , .value="TestValue" })();
 	checkWriteAccess@AccessControl({.user=args[0],.smartHome=args[1],.deviceItem=args[2]} )(response);
 	if(response){
 		sendCommand@RemoteControl({.smartHome=args[1],.deviceItem=args[2],.value=args[3]})(response);

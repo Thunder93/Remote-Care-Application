@@ -18,7 +18,7 @@ init {
 	    .host = "localhost";
 	    .driver = "mysql";
 	    .port = 3306;
-	    .database = "world?useSSL=false"; //eigene Datenbank?
+	    .database = "world?useSSL=false";
 	    .username = "root";
 	    .password = "root"
 	};
@@ -56,7 +56,7 @@ main {
 									"' AND deviceItem='"+AccessRequest.deviceItem + "';";
 		//println@Console(queryRequest)();
 		query@Database(queryRequest)(queryResponse);
-		if (#queryResponse.row == 1) { //TODO else throw error?
+		if (#queryResponse.row == 1) {
             response -> queryResponse.row[0].allowedWrite
     }
 	}]
@@ -66,7 +66,7 @@ main {
 									"' AND smartHome='"+AccessRequest.smartHome +
 									"' AND deviceItem='"+AccessRequest.deviceItem + "';";
 		query@Database(queryRequest)(queryResponse);
-		if (#queryResponse.row == 1) { //TODO else throw error?
+		if (#queryResponse.row == 1) {
 	         response -> queryResponse.row[0].allowedRead
 	  }
 	}]

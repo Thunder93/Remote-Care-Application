@@ -2,7 +2,6 @@ type Command:void {
 	.smartHome:string
 	.deviceItem:string
 	.value:string
-	//.commandType:string //Sinn?
 }
 
 type AccessRequest:void {

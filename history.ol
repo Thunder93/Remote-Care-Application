@@ -18,7 +18,7 @@ init {
 	    .host = "localhost";
 	    .driver = "mysql";
 	    .port = 3306;
-	    .database = "world?useSSL=false"; //eigene Datenbank?
+	    .database = "world?useSSL=false";
 	    .username = "root";
 	    .password = "root"
 	};
@@ -41,5 +41,5 @@ main {
 		println@Console("Logging Command:" + command.smartHome+ " "+ command.deviceItem +" "+ command.value)();
 		updateRequest="INSERT INTO history(smartHome,deviceItem,value) VALUES('"+command.smartHome+
 									"', '"+command.deviceItem+"', '"+command.value+"')";
-		update@Database(updateRequest)(response) //TODO Error handeling if response!=1
+		update@Database(updateRequest)(response)
 }
