@@ -2,9 +2,9 @@ include "console.iol"
 include "interface.iol"
 
 outputPort AccessControl {
-Location: "socket://localhost:8123/"
-Protocol: sodep
-Interfaces: AccessInterface
+	Location: "socket://localhost:8123/"
+	Protocol: sodep
+	Interfaces: AccessInterface
 }
 
 outputPort RemoteControl {
@@ -20,10 +20,10 @@ main
 		sendCommand@RemoteControl({.smartHome=args[1],.deviceItem=args[2],.value=args[3]})(response);
 		if(response){
 			println@Console("Successful")()
-		}else{
-			println@Console("Failed")()
+			}else{
+				println@Console("Failed")()
+			}
+			}else{
+				println@Console("User is not allowed to access or device does not exist")()
+			}
 		}
-	}else{
-		println@Console("User is not allowed to access or device does not exist")()
-	}
-}

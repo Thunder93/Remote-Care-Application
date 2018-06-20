@@ -17,22 +17,22 @@ type ItemState:void {
 
 type SmartHome:string {
 	.deviceItems*:string {
-		.itemStates*:ItemState	
+		.itemStates*:ItemState
 	}
 }
 
 interface AccessInterface {
 	RequestResponse:
-		checkWriteAccess(AccessRequest)(bool),
-		checkReadAccess(AccessRequest)(bool)
+	checkWriteAccess(AccessRequest)(bool),
+	checkReadAccess(AccessRequest)(bool)
 }
 
 interface HistoryInterface {
 	OneWay:
-		logCommand( Command )
+	logCommand( Command )
 }
 
 interface SmartHomeClientInterface {
 	RequestResponse:
-		sendCommand(Command)(bool)
+	sendCommand(Command)(bool)
 }

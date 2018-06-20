@@ -17,15 +17,15 @@ execution { concurrent }
 
 init {
 	install( TypeMismatch =>
-				println@Console( "TypeMismatch: " + main.TypeMismatch )()
-	)
-}
+		println@Console( "TypeMismatch: " + main.TypeMismatch )()
+		)
+	}
 
-main {
-	sendCommand(command)(response) {
-		println@Console("Device " + command.deviceItem + " at SmartHome " + command.smartHome + " has executed command.")() ;
-		response = true
-		|
-		logCommand@HistoryLogging(command)	
-	}	
-}
+	main {
+		sendCommand(command)(response) {
+			println@Console("Device " + command.deviceItem + " at SmartHome " + command.smartHome + " has executed command.")() ;
+			response = true
+			|
+			logCommand@HistoryLogging(command)
+		}
+	}
