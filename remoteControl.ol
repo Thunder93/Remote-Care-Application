@@ -7,7 +7,7 @@ outputPort AccessControl {
 	Interfaces: AccessInterface
 }
 
-outputPort RemoteControl {
+outputPort SmartHome {
 	Location: "socket://localhost:8125/"
 	Protocol: sodep
 	Interfaces: SmartHomeClientInterface
@@ -17,7 +17,7 @@ main
 {
 	checkWriteAccess@AccessControl({.user=args[0],.smartHome=args[1],.deviceItem=args[2]} )(response);
 	if(response){
-		sendCommand@RemoteControl({.smartHome=args[1],.deviceItem=args[2],.value=args[3]})(response);
+		sendCommand@SmartHome({.smartHome=args[1],.deviceItem=args[2],.value=args[3]})(response);
 		if(response){
 			println@Console("Successful")()
 			}else{
